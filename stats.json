@@ -1,0 +1,63 @@
+{
+  "total_images": 49998,
+  "classes": 13,
+  "meta_files": 49998,
+  "resolution": [
+    1024,
+    512
+  ],
+  "engine": "OPTIX",
+  "gpu": true,
+  "blender": "5.1.2",
+  "subject_count": {
+    "earth_obs_satellite": 3846,
+    "space_telescope": 3846,
+    "space_station": 3846,
+    "deep_space_probe": 3846,
+    "mars_mission": 3846,
+    "comm_satellite": 3846,
+    "cubesat": 3846,
+    "astronaut_eva": 3846,
+    "solar_heliophysics": 3846,
+    "rocket_launch_vehicle": 3846,
+    "planet": 3846,
+    "moon": 3846,
+    "asteroid": 3846
+  },
+  "occurrences": {
+    "earth_obs_satellite": 3846,
+    "planet": 13997,
+    "moon": 6387,
+    "space_telescope": 3846,
+    "space_station": 3846,
+    "deep_space_probe": 3846,
+    "mars_mission": 3846,
+    "comm_satellite": 3846,
+    "cubesat": 3846,
+    "astronaut_eva": 3846,
+    "solar_heliophysics": 3846,
+    "rocket_launch_vehicle": 3846,
+    "asteroid": 3846
+  },
+  "models_per_class": {
+    "earth_obs_satellite": 51,
+    "space_telescope": 26,
+    "space_station": 10,
+    "deep_space_probe": 32,
+    "mars_mission": 17,
+    "comm_satellite": 8,
+    "cubesat": 4,
+    "astronaut_eva": 14,
+    "solar_heliophysics": 17,
+    "rocket_launch_vehicle": 25,
+    "planet": 1,
+    "moon": 1,
+    "asteroid": 2
+  },
+  "flags": {
+    "depth_ok": 49998,
+    "pole_case": 3074,
+    "earth_backdrop": 12692,
+    "multi_object": 12692
+  }
+}
