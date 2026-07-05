@@ -1,0 +1,13 @@
+# Core baselines
+torch
+torchvision
+numpy
+pillow
+matplotlib
+
+# Segmentation & depth
+segmentation-models-pytorch
+opencv-python
+
+# Optional: figure export
+# pandas

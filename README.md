@@ -23,7 +23,82 @@ Each frame ships **RGB** (1024×512 equirectangular), a **semantic mask** (pixel
 
 Treat inputs as ordinary 2-D images for baselines. Augment with **horizontal roll** (longitude rotation); **do not** vertically flip — that breaks pole geometry.
 
-## How it was made
+## How to use this code
+
+This repo ships baseline training scripts and documentation tools. Run everything from the **repository root**.
+
+### Setup
+
+```bash
+pip install -r requirements.txt
+# Install a CUDA build of torch matching your GPU driver if training on GPU.
+```
+
+Point all scripts at your local dataset root (not included here). Expected layout:
+
+```
+<dataset_root>/
+├── image/<class>/<id>.png
+├── mask/<class>/<id>.png
+├── depth/<class>/<id>.exr
+├── meta/<class>/<id>.json
+└── splits.json          # created by split_dataset.py
+```
+
+### Workflow
+
+**1. Create a reproducible split** (≈80/10/10, stratified by class):
+
+```bash
+python scripts/split_dataset.py /path/to/dataset_root
+```
+
+**2. Train baselines** (examples — set `CUDA_VISIBLE_DEVICES` as needed):
+
+```bash
+python scripts/train_classify.py /path/to/dataset_root --epochs 8 --arch resnet50
+python scripts/train_segment.py  /path/to/dataset_root --epochs 20 --encoder resnet34
+python scripts/train_depth.py    /path/to/dataset_root --epochs 20 --encoder resnet34
+python scripts/train_pose.py     /path/to/dataset_root --epochs 20 --arch resnet50
+```
+
+Checkpoints and curves are written to `runs/<task>/`.
+
+**3. Regenerate dataset docs** (after updating `stats.json`):
+
+```bash
+python make_dataset_docs.py
+```
+
+**4. Regenerate figures**:
+
+```bash
+python scripts/make_all_figures.py          # stats charts -> figures_candidates/
+python scripts/make_paper_figures.py --root /path/to/dataset_root --ckpt runs/classify/best.pt
+```
+
+**5. Optional utilities**:
+
+| Script | Purpose |
+|---|---|
+| `scripts/subtypes.py` | Per-class 3-D model breakdown → `subtypes.json` |
+| `scripts/gather_gt.py` | Bundle hand-picked candidate frames into `candidates_gt/` |
+| `scripts/classify_candidates.py` | Classify candidates → `outputs/classify_candidates.csv` |
+| `scripts/evaluate_candidates.py` | Segmentation + depth eval → `outputs/eval_per_frame.csv` |
+| `scripts/classify_testset.py` | Full test-split classification metrics |
+
+### Repository layout
+
+```
+├── README.md              # Dataset documentation (this file)
+├── stats.json             # Dataset statistics (feeds make_dataset_docs.py)
+├── make_dataset_docs.py   # Regenerate README from stats.json
+├── requirements.txt
+├── figures/               # Documentation figures
+├── scripts/               # Training, evaluation, and figure scripts
+└── outputs/               # Evaluation CSVs and other small results
+```
+
 
 Each frame is rendered in Blender (Cycles, GPU/OptiX) through a Python (bpy) pipeline. The camera is a panoramic equirectangular camera capturing the full sphere. Every frame places one labeled subject in a fully random 3-D orientation (logged as a quaternion) at a random position on the sphere. Backgrounds mix a procedural starfield of varied density, a randomly chosen planet or moon backdrop (Earth, Mars, Jupiter, Saturn, Venus, Moon), and an occasional pure-black deep-space frame. Lighting uses a sun aimed at the subject plus fill and rim lights; backdrops receive a dedicated sun so their camera-facing side is lit. Depth is written through the compositor as a single-layer 32-bit OpenEXR. Cubesats are partly procedurally generated (random 1U/2U/3U/6U bodies, deployable solar wings, antennas) to compensate for the small number of real cubesat models.
 

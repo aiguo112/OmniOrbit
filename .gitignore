@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Training outputs (large checkpoints — regenerate locally)
+runs/
+
+# Generated / local-only
+figures_candidates/
+figures_pub/
+classify_eval/
+classify_testset/
+eval_candidates/
+candidates_gt/
+README.pdf
+
+# Dataset root (download separately — not stored in this docs repo)
+space_erp_final/
