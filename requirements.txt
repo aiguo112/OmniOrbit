@@ -1,13 +1,21 @@
-# Core baselines
-torch
-torchvision
-numpy
-pillow
-matplotlib
+# OmniOrbit — training & evaluation environment
+# Validated on: Python 3.10.20 | CUDA 12.1 | 2x NVIDIA RTX 3060 (driver 555.58.02)
+# conda env: pano360x
+#
+# Install (CUDA 12.1 build of PyTorch from the official index):
+#   pip install torch==2.5.1 torchvision==0.20.1 --index-url https://download.pytorch.org/whl/cu121
+#   pip install -r requirements.txt
+#
+# Rendering (Blender 5.1.2 / bpy) is a SEPARATE environment — see ENVIRONMENT.md
 
-# Segmentation & depth
-segmentation-models-pytorch
-opencv-python
-
-# Optional: figure export
-# pandas
+torch==2.5.1
+torchvision==0.20.1
+segmentation-models-pytorch==0.5.0
+timm==1.0.27
+ptflops==0.7.5
+opencv-python==4.13.0.92
+numpy==2.2.6
+pillow==12.2.0
+matplotlib==3.10.9
+pandas==2.3.3
+scipy==1.15.3
